@@ -1,4 +1,4 @@
-package ru.alexnov.wellcementing;
+п»їpackage ru.alexnov.wellcementing;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -15,33 +15,33 @@ public class Program {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		//Инициализация массива профиля скважины
+		//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РјР°СЃСЃРёРІР° РїСЂРѕС„РёР»СЏ СЃРєРІР°Р¶РёРЅС‹
 				for (int i = 0; i<100; i++){
 					for (int j=0; j<3; j++){
 						massiv[i][j] = 0.0;
 					}
 				}
-				//Инициализация массива предыдущей колонны
+				//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РјР°СЃСЃРёРІР° РїСЂРµРґС‹РґСѓС‰РµР№ РєРѕР»РѕРЅРЅС‹
 						for (int i = 0; i<10; i++){
 							for (int j=0; j<4; j++){
 								previous[i][j] = 0.0;
 							}
 						}
-				//Инициализация массива открытого ствола
+				//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РјР°СЃСЃРёРІР° РѕС‚РєСЂС‹С‚РѕРіРѕ СЃС‚РІРѕР»Р°
 						for (int i = 0; i<10; i++){
 							for (int j=0; j<4; j++){
 								openhole[i][j] = 0.0;
 							}
 						}
 						
-						//Инициализация массива открытого ствола
+						//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РјР°СЃСЃРёРІР° РѕС‚РєСЂС‹С‚РѕРіРѕ СЃС‚РІРѕР»Р°
 						for (int i = 0; i<10; i++){
 							for (int j=0; j<4; j++){
 								casing[i][j] = 0.0;
 							}
 						}
 						
-						//Инициализация цементов
+						//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ С†РµРјРµРЅС‚РѕРІ
 						for (int i = 0; i<5; i++){
 							for (int j=0; j<6; j++){
 								cements[i][j] = 0.0;
@@ -49,7 +49,7 @@ public class Program {
 						}
 		
 						try {
-					          // устанавливаем LookAndFeel
+					          // СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј LookAndFeel
 							//UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
 							//UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 							UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");

@@ -1,11 +1,17 @@
-package ru.alexnov.wellcementing;
+п»їpackage ru.alexnov.wellcementing;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -25,28 +31,28 @@ import ru.alexnov.wellcementing.Tables.ProfileTableModel;
 
 public class MainWindow extends JFrame {
 	
-	public static int index = 1;//профиль
-	public static int index2 = 1;//предыдущая колонна
-	public static int index3 = 1;//открытый ствол
-	public static int index4 = 1;//цементируемая колонна
-	public static int index5 = 1;//цементы
+	public static int index = 1;//РїСЂРѕС„РёР»СЊ
+	public static int index2 = 1;//РїСЂРµРґС‹РґСѓС‰Р°СЏ РєРѕР»РѕРЅРЅР°
+	public static int index3 = 1;//РѕС‚РєСЂС‹С‚С‹Р№ СЃС‚РІРѕР»
+	public static int index4 = 1;//С†РµРјРµРЅС‚РёСЂСѓРµРјР°СЏ РєРѕР»РѕРЅРЅР°
+	public static int index5 = 1;//С†РµРјРµРЅС‚С‹
 	
-	//создаем экземпляр профиля
+	//СЃРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РїСЂРѕС„РёР»СЏ
 	ProfileTableModel profileSample = new ProfileTableModel();
-	//создаем экземпляр данных по предыдущим колоннам
+	//СЃРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РґР°РЅРЅС‹С… РїРѕ РїСЂРµРґС‹РґСѓС‰РёРј РєРѕР»РѕРЅРЅР°Рј
 	PreviousTableModel previousSample = new PreviousTableModel();
-	//создаем экземпляр данных по открытому стволу
+	//СЃРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РґР°РЅРЅС‹С… РїРѕ РѕС‚РєСЂС‹С‚РѕРјСѓ СЃС‚РІРѕР»Сѓ
 	OpenHoleTableModel openholeSample = new OpenHoleTableModel();
-	//создаем экземпляр данных по цементируемой колонне
+	//СЃРѕР·РґР°РµРј СЌРєР·РµРјРїР»СЏСЂ РґР°РЅРЅС‹С… РїРѕ С†РµРјРµРЅС‚РёСЂСѓРµРјРѕР№ РєРѕР»РѕРЅРЅРµ
 	CementingCasingTableModel casingSample = new CementingCasingTableModel();
 	
-	//Обработка нажатия клавиши + - добавляем единицу к счетчику и обновляем таблицу профиля
+	//РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё + - РґРѕР±Р°РІР»СЏРµРј РµРґРёРЅРёС†Сѓ Рє СЃС‡РµС‚С‡РёРєСѓ Рё РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ РїСЂРѕС„РёР»СЏ
 	private void plusProfileActionPerformed(ActionEvent e) {
 		index = index+1;
 		profileSample.fireTableStructureChanged();
 	}
-	//Обработка нажатия клавиши "-" - обнуляем последнюю строку
-		//отнимаем единицу от счетчика и обновляем таблицу профиля
+	//РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё "-" - РѕР±РЅСѓР»СЏРµРј РїРѕСЃР»РµРґРЅСЋСЋ СЃС‚СЂРѕРєСѓ
+		//РѕС‚РЅРёРјР°РµРј РµРґРёРЅРёС†Сѓ РѕС‚ СЃС‡РµС‚С‡РёРєР° Рё РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ РїСЂРѕС„РёР»СЏ
 		private void minusProfileActionPerformed(ActionEvent e) {
 			// TODO add your code here
 			if (index ==0){
@@ -57,21 +63,21 @@ public class MainWindow extends JFrame {
 			profileSample.fireTableStructureChanged();
 			}
 			else {
-JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка", JOptionPane.ERROR_MESSAGE);
+JOptionPane.showMessageDialog(scroll1, "РџРµСЂРІСѓСЋ СЃС‚СЂРѕРєСѓ РЅРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ", "РћС€РёР±РєР°", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		//Кнопка запуска калькулятора профиля
+		//РљРЅРѕРїРєР° Р·Р°РїСѓСЃРєР° РєР°Р»СЊРєСѓР»СЏС‚РѕСЂР° РїСЂРѕС„РёР»СЏ
 		private void calcProfileActionPerformed(ActionEvent e){
 			ProfileCalcucator calc = new ProfileCalcucator();
 			calc.setVisible(true);
 		}
-		//Обработка нажатия клавиши + - добавляем единицу к счетчику и обновляем таблицу предыдущей колонны
+		//РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё + - РґРѕР±Р°РІР»СЏРµРј РµРґРёРЅРёС†Сѓ Рє СЃС‡РµС‚С‡РёРєСѓ Рё РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ РїСЂРµРґС‹РґСѓС‰РµР№ РєРѕР»РѕРЅРЅС‹
 		private void plusPreviousActionPerformed(ActionEvent e){
 			index2 = index2+1;
 			previousSample.fireTableStructureChanged();
 		}
-		//Обработка нажатия клавиши "-" - обнуляем последнюю строку
-				//отнимаем единицу от счетчика и обновляем таблицу предыдущей колонны
+		//РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё "-" - РѕР±РЅСѓР»СЏРµРј РїРѕСЃР»РµРґРЅСЋСЋ СЃС‚СЂРѕРєСѓ
+				//РѕС‚РЅРёРјР°РµРј РµРґРёРЅРёС†Сѓ РѕС‚ СЃС‡РµС‚С‡РёРєР° Рё РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ РїСЂРµРґС‹РґСѓС‰РµР№ РєРѕР»РѕРЅРЅС‹
 		private void minusPreviousActionPerformed(ActionEvent e){
 			if (index2 ==0){
 			Program.previous[index2-1][0] = 0.0;
@@ -82,16 +88,16 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 			previousSample.fireTableStructureChanged();
 			}
 			else {
-JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка", JOptionPane.ERROR_MESSAGE);
+JOptionPane.showMessageDialog(scroll1, "РџРµСЂРІСѓСЋ СЃС‚СЂРѕРєСѓ РЅРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ", "РћС€РёР±РєР°", JOptionPane.ERROR_MESSAGE);
 			}
 		}
-		//Обработка нажатия клавиши + - добавляем единицу к счетчику и обновляем таблицу открытого ствола
+		//РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё + - РґРѕР±Р°РІР»СЏРµРј РµРґРёРЅРёС†Сѓ Рє СЃС‡РµС‚С‡РёРєСѓ Рё РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ РѕС‚РєСЂС‹С‚РѕРіРѕ СЃС‚РІРѕР»Р°
 		private void plusOpenholeActionPerformed(ActionEvent e){
 			index3 = index3+1;
 			openholeSample.fireTableStructureChanged();
 		}
-		//Обработка нажатия клавиши "-" - обнуляем последнюю строку
-		//отнимаем единицу от счетчика и обновляем таблицу открытого ствола
+		//РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё "-" - РѕР±РЅСѓР»СЏРµРј РїРѕСЃР»РµРґРЅСЋСЋ СЃС‚СЂРѕРєСѓ
+		//РѕС‚РЅРёРјР°РµРј РµРґРёРЅРёС†Сѓ РѕС‚ СЃС‡РµС‚С‡РёРєР° Рё РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ РѕС‚РєСЂС‹С‚РѕРіРѕ СЃС‚РІРѕР»Р°
 		private void minusOpenholeActionPerformed(ActionEvent e){
 			if (index3 ==0){
 			Program.openhole[index3-1][0] = 0.0;
@@ -102,16 +108,16 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 			openholeSample.fireTableStructureChanged();
 		}
 		else {
-JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка", JOptionPane.ERROR_MESSAGE);
+JOptionPane.showMessageDialog(scroll1, "РџРµСЂРІСѓСЋ СЃС‚СЂРѕРєСѓ РЅРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ", "РћС€РёР±РєР°", JOptionPane.ERROR_MESSAGE);
 		}
 		}
-		//Обработка нажатия клавиши + - добавляем единицу к счетчику и обновляем таблицу цементируемой колонны
+		//РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё + - РґРѕР±Р°РІР»СЏРµРј РµРґРёРЅРёС†Сѓ Рє СЃС‡РµС‚С‡РёРєСѓ Рё РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ С†РµРјРµРЅС‚РёСЂСѓРµРјРѕР№ РєРѕР»РѕРЅРЅС‹
 				private void plusCasingActionPerformed(ActionEvent e){
 					index4 = index4+1;
 					casingSample.fireTableStructureChanged();
 				}
-				//Обработка нажатия клавиши "-" - обнуляем последнюю строку
-				//отнимаем единицу от счетчика и обновляем таблицу цементируемой колонны
+				//РћР±СЂР°Р±РѕС‚РєР° РЅР°Р¶Р°С‚РёСЏ РєР»Р°РІРёС€Рё "-" - РѕР±РЅСѓР»СЏРµРј РїРѕСЃР»РµРґРЅСЋСЋ СЃС‚СЂРѕРєСѓ
+				//РѕС‚РЅРёРјР°РµРј РµРґРёРЅРёС†Сѓ РѕС‚ СЃС‡РµС‚С‡РёРєР° Рё РѕР±РЅРѕРІР»СЏРµРј С‚Р°Р±Р»РёС†Сѓ С†РµРјРµРЅС‚РёСЂСѓРµРјРѕР№ РєРѕР»РѕРЅРЅС‹
 				private void minusCasingActionPerformed(ActionEvent e){
 					if (index4 ==0){	
 				Program.casing[index4-1][0] = 0.0;
@@ -122,7 +128,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 				casingSample.fireTableStructureChanged();
 				}
 					else {
-JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка", JOptionPane.ERROR_MESSAGE);
+JOptionPane.showMessageDialog(scroll1, "РџРµСЂРІСѓСЋ СЃС‚СЂРѕРєСѓ РЅРµР»СЊР·СЏ СѓРґР°Р»РёС‚СЊ", "РћС€РёР±РєР°", JOptionPane.ERROR_MESSAGE);
 								}
 				}
 		
@@ -131,22 +137,22 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 		JScrollPane scroll2 = new JScrollPane();
 		JPanel panel10 = new JPanel();
 		JPanel panel100 = new JPanel();
-		JLabel label1 = new JLabel("Месторождение");
-		JLabel label2 = new JLabel("Куст");
-		JLabel label3 = new JLabel("Скважина");
+		JLabel label1 = new JLabel("РњРµСЃС‚РѕСЂРѕР¶РґРµРЅРёРµ");
+		JLabel label2 = new JLabel("РљСѓСЃС‚");
+		JLabel label3 = new JLabel("РЎРєРІР°Р¶РёРЅР°");
 		JTextField fieldName = new JTextField();
 		JTextField bushName = new JTextField();
 		JTextField wellNumber = new JTextField();
 		JPanel panel1 = new JPanel();
 		JPanel panel200 = new JPanel();
-		JLabel label4 = new JLabel("Профиль скважины");
+		JLabel label4 = new JLabel("РџСЂРѕС„РёР»СЊ СЃРєРІР°Р¶РёРЅС‹");
 		JPanel panel201 = new JPanel();
-		JButton calcProfile = new JButton("Калькулятор");
+		JButton calcProfile = new JButton("РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ");
 		JButton plusProfile = new JButton("+");
 		JButton minusProfile = new JButton("-");
 		JPanel panel20 = new JPanel();
 		JPanel panel300 = new JPanel();
-		JLabel label5 = new JLabel("Предыдущая колонна");
+		JLabel label5 = new JLabel("РџСЂРµРґС‹РґСѓС‰Р°СЏ РєРѕР»РѕРЅРЅР°");
 		JPanel panel301 = new JPanel();
 		JButton plusPrevious = new JButton("+");
 		JButton minusPrevious = new JButton("-");
@@ -154,7 +160,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 		JScrollPane scroll200 = new JScrollPane();
 		JTable previousTable = new JTable(previousSample);
 		JPanel panel400 = new JPanel();
-		JLabel label6 = new JLabel("Открытый ствол");
+		JLabel label6 = new JLabel("РћС‚РєСЂС‹С‚С‹Р№ СЃС‚РІРѕР»");
 		JPanel panel401 = new JPanel();
 		JButton plusOpenhole = new JButton("+");
 		JButton minusOpenhole = new JButton("-");
@@ -162,7 +168,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 		JScrollPane scroll300 = new JScrollPane();
 		JTable openholeTable = new JTable(openholeSample);
 		JPanel panel500 = new JPanel();
-		JLabel label7 = new JLabel("Цементируемая колонна");
+		JLabel label7 = new JLabel("Р¦РµРјРµРЅС‚РёСЂСѓРµРјР°СЏ РєРѕР»РѕРЅРЅР°");
 		JPanel panel501 = new JPanel();
 		JButton plusCasing = new JButton("+");
 		JButton minusCasing = new JButton("-");
@@ -173,7 +179,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 		JScrollPane scroll100 = new JScrollPane();
 		JTable profileTable = new JTable(profileSample);
 		JOptionPane message = new JOptionPane();
-		//Меню
+		//РњРµРЅСЋ
 		JMenuBar menuBar = new JMenuBar();
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem openItem = new JMenuItem("Open");
@@ -182,10 +188,10 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 	
 	public MainWindow(){
 		
-		super("Ввод исходных данных");
+		super("Р’РІРѕРґ РёСЃС…РѕРґРЅС‹С… РґР°РЅРЅС‹С…");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(620, 650);
-		//Собираем меню
+		//РЎРѕР±РёСЂР°РµРј РјРµРЅСЋ
 		fileMenu.add(openItem);
 		fileMenu.add(saveItem);
 		fileMenu.add(saveasItem);
@@ -197,60 +203,60 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 		fieldName.setPreferredSize(new Dimension(100,20));
 		bushName.setPreferredSize(new Dimension(50,20));
 		wellNumber.setPreferredSize(new Dimension(50,20));
-				//Панель с надписью профиль скважины
+				//РџР°РЅРµР»СЊ СЃ РЅР°РґРїРёСЃСЊСЋ РїСЂРѕС„РёР»СЊ СЃРєРІР°Р¶РёРЅС‹
 				panel200.setLayout(new FlowLayout(FlowLayout.LEFT));
 				panel200.add(label4);
-				//Панель с тремя кнопками - для таблицы и конструктор
+				//РџР°РЅРµР»СЊ СЃ С‚СЂРµРјСЏ РєРЅРѕРїРєР°РјРё - РґР»СЏ С‚Р°Р±Р»РёС†С‹ Рё РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
 				panel201.setLayout(new FlowLayout(FlowLayout.RIGHT));
 				panel201.add(calcProfile);
 				panel201.add(minusProfile);
 				panel201.add(plusProfile);
-				//Объединяем две панели в одной
+				//РћР±СЉРµРґРёРЅСЏРµРј РґРІРµ РїР°РЅРµР»Рё РІ РѕРґРЅРѕР№
 				panel20.setLayout(new BoxLayout(panel20, BoxLayout.X_AXIS));
 				panel20.add(panel200);
 				panel20.add(panel201);
-				//Панель с надписью предыдущая колонна
+				//РџР°РЅРµР»СЊ СЃ РЅР°РґРїРёСЃСЊСЋ РїСЂРµРґС‹РґСѓС‰Р°СЏ РєРѕР»РѕРЅРЅР°
 				panel300.setLayout(new FlowLayout(FlowLayout.LEFT));
 				panel300.add(label5);
-				//Панель с двумя кнопками - для таблицы предыдущей колонны
+				//РџР°РЅРµР»СЊ СЃ РґРІСѓРјСЏ РєРЅРѕРїРєР°РјРё - РґР»СЏ С‚Р°Р±Р»РёС†С‹ РїСЂРµРґС‹РґСѓС‰РµР№ РєРѕР»РѕРЅРЅС‹
 				panel301.setLayout(new FlowLayout(FlowLayout.RIGHT));
 				panel301.add(minusPrevious);
 				panel301.add(plusPrevious);
-				//Объединяем две панели в одной
+				//РћР±СЉРµРґРёРЅСЏРµРј РґРІРµ РїР°РЅРµР»Рё РІ РѕРґРЅРѕР№
 				panel30.setLayout(new BoxLayout(panel30, BoxLayout.X_AXIS));
 				panel30.add(panel300);
 				panel30.add(panel301);
-				//Таблица для предыдущей колонны
+				//РўР°Р±Р»РёС†Р° РґР»СЏ РїСЂРµРґС‹РґСѓС‰РµР№ РєРѕР»РѕРЅРЅС‹
 				previousTable.setPreferredSize(new Dimension(580, 80));
 				scroll200.setViewportView(previousTable);
 				previousTable.setPreferredScrollableViewportSize(new Dimension(580, 80));
-				//Панель с надписью открытый ствол
+				//РџР°РЅРµР»СЊ СЃ РЅР°РґРїРёСЃСЊСЋ РѕС‚РєСЂС‹С‚С‹Р№ СЃС‚РІРѕР»
 				panel400.setLayout(new FlowLayout(FlowLayout.LEFT));
 				panel400.add(label6);
-				//Панель с двумя кнопками - для таблицы открытого ствола
+				//РџР°РЅРµР»СЊ СЃ РґРІСѓРјСЏ РєРЅРѕРїРєР°РјРё - РґР»СЏ С‚Р°Р±Р»РёС†С‹ РѕС‚РєСЂС‹С‚РѕРіРѕ СЃС‚РІРѕР»Р°
 				panel401.setLayout(new FlowLayout(FlowLayout.RIGHT));
 				panel401.add(minusOpenhole);
 				panel401.add(plusOpenhole);
-				//Объединяем две панели в одной
+				//РћР±СЉРµРґРёРЅСЏРµРј РґРІРµ РїР°РЅРµР»Рё РІ РѕРґРЅРѕР№
 				panel40.setLayout(new BoxLayout(panel40, BoxLayout.X_AXIS));
 				panel40.add(panel400);
 				panel40.add(panel401);
-				//Таблица для открытого ствола
+				//РўР°Р±Р»РёС†Р° РґР»СЏ РѕС‚РєСЂС‹С‚РѕРіРѕ СЃС‚РІРѕР»Р°
 				openholeTable.setPreferredSize(new Dimension(580, 80));
 				scroll300.setViewportView(openholeTable);
 				openholeTable.setPreferredScrollableViewportSize(new Dimension(580, 80));
-				//Панель с надписью цементируемая колонна
+				//РџР°РЅРµР»СЊ СЃ РЅР°РґРїРёСЃСЊСЋ С†РµРјРµРЅС‚РёСЂСѓРµРјР°СЏ РєРѕР»РѕРЅРЅР°
 				panel500.setLayout(new FlowLayout(FlowLayout.LEFT));
 				panel500.add(label7);
-				//Панель с двумя кнопками - для таблицы цементируемой колонны
+				//РџР°РЅРµР»СЊ СЃ РґРІСѓРјСЏ РєРЅРѕРїРєР°РјРё - РґР»СЏ С‚Р°Р±Р»РёС†С‹ С†РµРјРµРЅС‚РёСЂСѓРµРјРѕР№ РєРѕР»РѕРЅРЅС‹
 				panel501.setLayout(new FlowLayout(FlowLayout.RIGHT));
 				panel501.add(minusCasing);
 				panel501.add(plusCasing);
-				//Объединяем две панели в одно
+				//РћР±СЉРµРґРёРЅСЏРµРј РґРІРµ РїР°РЅРµР»Рё РІ РѕРґРЅРѕ
 				panel50.setLayout(new BoxLayout(panel50, BoxLayout.X_AXIS));
 				panel50.add(panel500);
 				panel50.add(panel501);
-				//Таблица для цементируемой колонны
+				//РўР°Р±Р»РёС†Р° РґР»СЏ С†РµРјРµРЅС‚РёСЂСѓРµРјРѕР№ РєРѕР»РѕРЅРЅС‹
 				casingTable.setPreferredSize(new Dimension(580, 80));
 				scroll400.setViewportView(casingTable);
 				casingTable.setPreferredScrollableViewportSize(new Dimension(580, 80));
@@ -261,15 +267,15 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 				scroll100.setViewportView(profileTable);
 				setJMenuBar(menuBar);
 				
-				//Обработка событий
-				//Профиль +
+				//РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№
+				//РџСЂРѕС„РёР»СЊ +
 				plusProfile.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e) {
 						plusProfileActionPerformed(e);
 					}
 				
 				});
-				//Профиль -
+				//РџСЂРѕС„РёР»СЊ -
 				minusProfile.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e) {
 						minusProfileActionPerformed(e);
@@ -277,47 +283,59 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 				
 				});
 				
-				//Калькулятор профиля
+				//РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ РїСЂРѕС„РёР»СЏ
 				calcProfile.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e) {
 						calcProfileActionPerformed(e);
 					}
 				});
 				
-				//Предыдущая колонна +
+				//РџСЂРµРґС‹РґСѓС‰Р°СЏ РєРѕР»РѕРЅРЅР° +
 				plusPrevious.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						plusPreviousActionPerformed(e);
 					}
 				});
-				//Предыдущая колонна -
+				//РџСЂРµРґС‹РґСѓС‰Р°СЏ РєРѕР»РѕРЅРЅР° -
 				minusPrevious.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						minusPreviousActionPerformed(e);
 					}
 				});
-				//Открытый ствол + 
+				//РћС‚РєСЂС‹С‚С‹Р№ СЃС‚РІРѕР» + 
 				plusOpenhole.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						plusOpenholeActionPerformed(e);
 					}
 				});
-				//Открытый ствол -
+				//РћС‚РєСЂС‹С‚С‹Р№ СЃС‚РІРѕР» -
 				minusOpenhole.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						minusOpenholeActionPerformed(e);
 					}
 				});
-				//Цементируемая колонна + 
+				//Р¦РµРјРµРЅС‚РёСЂСѓРµРјР°СЏ РєРѕР»РѕРЅРЅР° + 
 				plusCasing.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						plusCasingActionPerformed(e);
 					}
 				});
-				//Цементируемая колонна -
+				//Р¦РµРјРµРЅС‚РёСЂСѓРµРјР°СЏ РєРѕР»РѕРЅРЅР° -
 				minusCasing.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						minusCasingActionPerformed(e);
+					}
+				});
+				//РњРµРЅСЋ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р»
+				openItem.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						loadFile();
+					}
+				});
+				//РњРµРЅСЋ СЃРѕС…СЂР°РЅРёС‚СЊ РєР°Рє С„Р°Р№Р»
+				saveasItem.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						saveFile();
 					}
 				});
 				
@@ -344,12 +362,114 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка",
 				
 		scroll1.setViewportView(panel1);
 		
-		tabPanel.addTab("Конструкция скважины", scroll1);
-		tabPanel.addTab("Технологические жидкости", scroll2);
+		tabPanel.addTab("РљРѕРЅСЃС‚СЂСѓРєС†РёСЏ СЃРєРІР°Р¶РёРЅС‹", scroll1);
+		tabPanel.addTab("РўРµС…РЅРѕР»РѕРіРёС‡РµСЃРєРёРµ Р¶РёРґРєРѕСЃС‚Рё", scroll2);
 		
 		getContentPane().add(tabPanel);
 		
 		
 		
 	}
+	//Р§С‚РµРЅРёРµ С„Р°Р№Р»Р°
+	private void loadFile(){
+		JFileChooser fileload = new JFileChooser();
+		FileReader myFile = null; 
+		BufferedReader buff = null;
+		ArrayList<String> FromFile = new ArrayList<String>();
+		int ret = fileload.showOpenDialog(null);
+		if (ret == JFileChooser.APPROVE_OPTION){
+			//РЎРѕР·РґР°С‘Рј РѕР±СЉРµРєС‚ С„Р°Р№Р»Р°
+			File fileToLoad = fileload.getSelectedFile();
+			try{
+				//РћР±СЉРµРєС‚, РїРѕР·РІРѕР»СЏСЋС‰РёР№ РѕСЃСѓС‰РµСЃС‚РІРёС‚СЊ С‡С‚РµРЅРёРµ РёР· С„Р°Р№Р»Р°
+				myFile =  new FileReader(fileToLoad);
+				//Р‘СѓС„РµСЂ РґР»СЏ Р·Р°РїРёСЃРё
+				buff = new BufferedReader(myFile);
+				//РЎС‡РёС‚С‹РІР°РµРј С„Р°Р№Р» Рё Р·Р°РїРёСЃС‹РІР°РµРј РІ РјР°СЃСЃРёРІ
+				while (true){
+					String line = buff.readLine();
+					if (line == null) break;
+					FromFile.add(line);
+				}
+				//РЎРёРЅС‚Р°РєСЃРёС‡РµСЃРєРёР№ СЂР°Р·Р±РѕСЂ С„Р°Р№Р»Р°
+				String line1 = FromFile.get(0);
+				if (line1.equals("dataofoilorgaswell")){
+					//Р—Р°РїРёСЃС‹РІР°РµРј РјРµСЃС‚РѕСЂРѕР¶РґРµРЅРёРµ
+					fieldName.setText(FromFile.get(1));
+					//Р—Р°РїРёСЃС‹РІР°РµРј РєСѓСЃС‚
+					bushName.setText(FromFile.get(2));
+					//Р—Р°РїРёСЃС‹РІР°РµРј СЃРєРІР°Р¶РёРЅСѓ
+					wellNumber.setText(FromFile.get(3));
+					//Р—Р°РїРёСЃС‹РІР°РµРј РїСЂРѕС„РёР»СЊ
+					int i = 5;
+					int j = 0;
+					while (!FromFile.get(i).equals("previous")){
+						String oneline[] = FromFile.get(i).split(" ");
+						Program.massiv[j][0] = Double.parseDouble(oneline[0]);
+						Program.massiv[j][1] = Double.parseDouble(oneline[1]);
+						Program.massiv[j][2] = Double.parseDouble(oneline[2]);
+						index = index + 1;
+						profileSample.fireTableStructureChanged();
+						i++;
+						j++;
+					}
+					index = index - 1;
+					//Р—Р°РїРёСЃС‹РІР°РµРј РїСЂРµРґС‹РґСѓС‰СѓСЋ РєРѕР»РѕРЅРЅСѓ
+					j = 0; i = i+1;
+					while (!FromFile.get(i).equals("openhole")){
+					String oneline[] = FromFile.get(i).split(" ");
+					Program.previous[j][0] = Double.parseDouble(oneline[0]);
+					Program.previous[j][1] = Double.parseDouble(oneline[1]);
+					Program.previous[j][2] = Double.parseDouble(oneline[2]);
+					Program.previous[j][3] = Double.parseDouble(oneline[3]);
+					index2 = index2+1;
+					previousSample.fireTableStructureChanged();
+					i++;
+					j++;
+					}
+					index2 = index2-1;
+					//Р—Р°РїРёСЃС‹РІР°РµРј РѕС‚РєСЂС‹С‚С‹Р№ СЃС‚РІРѕР»
+					j = 0; i = i+1;
+					while (!FromFile.get(i).equals("casing")){
+						String oneline[] = FromFile.get(i).split(" ");
+						Program.openhole[j][0] = Double.parseDouble(oneline[0]);
+						Program.openhole[j][1] = Double.parseDouble(oneline[1]);
+						Program.openhole[j][2] = Double.parseDouble(oneline[2]);
+						Program.openhole[j][3] = Double.parseDouble(oneline[3]);
+						index3 = index3+1;
+						openholeSample.fireTableStructureChanged();
+						i++;
+						j++;
+						}
+					index3 = index3-1;
+					//Р—Р°РїРёСЃС‹РІР°РµРј С†РµРјРµРЅС‚РёСЂСѓРµРјСѓСЋ РєРѕР»РѕРЅРЅСѓ
+					j=0; i = i+1;
+					while (!FromFile.get(i).equals("end")){
+						String oneline[] = FromFile.get(i).split(" ");
+						Program.casing[j][0] = Double.parseDouble(oneline[0]);
+						Program.casing[j][1] = Double.parseDouble(oneline[1]);
+						Program.casing[j][2] = Double.parseDouble(oneline[2]);
+						Program.casing[j][3] = Double.parseDouble(oneline[3]);
+						index4 = index4+1;
+						casingSample.fireTableStructureChanged();
+						i++;
+						j++;
+						}
+					index4 = index4-1;
+					
+					
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "РќРµРїСЂР°РІРёР»СЊРЅС‹Р№ С‚РёРї С„Р°Р№Р»Р°");
+				}
+			}catch (IOException e1) {e1.printStackTrace();
+			} finally{
+				try {
+		             buff.close(); 
+		             myFile.close();
+			}catch (IOException e2) {e2.printStackTrace();}
+			}
+		}
+	}
+	private void saveFile(){}
 }

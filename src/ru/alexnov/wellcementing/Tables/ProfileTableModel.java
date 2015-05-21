@@ -1,4 +1,4 @@
-package ru.alexnov.wellcementing.Tables;
+п»їpackage ru.alexnov.wellcementing.Tables;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -9,20 +9,20 @@ import ru.alexnov.wellcementing.Program;
 public class ProfileTableModel extends AbstractTableModel {
 
 	@Override
-	//Количество столбцов в таблице
+	//РљРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚РѕР»Р±С†РѕРІ РІ С‚Р°Р±Р»РёС†Рµ
 		public int getColumnCount() {
 			// TODO Auto-generated method stub
 			return 3;
 		}
 
 	@Override
-	//Количество строк в таблице
+	//РљРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂРѕРє РІ С‚Р°Р±Р»РёС†Рµ
 		public int getRowCount() {
 			// TODO Auto-generated method stub
 			return MainWindow.index;
 		}
 
-	//Чтение элемента таблицы
+	//Р§С‚РµРЅРёРµ СЌР»РµРјРµРЅС‚Р° С‚Р°Р±Р»РёС†С‹
 	@Override
 	public Object getValueAt(int rowIndex, int colIndex) {
 		// TODO Auto-generated method stub
@@ -31,49 +31,49 @@ public class ProfileTableModel extends AbstractTableModel {
 catch (java.lang.NullPointerException e) {return "err";}		
 }
 	
-	//Переопределяем метод, чтобы сделать ячейки редактируемыми
+	//РџРµСЂРµРѕРїСЂРµРґРµР»СЏРµРј РјРµС‚РѕРґ, С‡С‚РѕР±С‹ СЃРґРµР»Р°С‚СЊ СЏС‡РµР№РєРё СЂРµРґР°РєС‚РёСЂСѓРµРјС‹РјРё
 		public boolean isCellEditable(int rowIndex, int colIndex){
 			return true;
 		}
 		
-		//Переопределяем метод, возвращающий названия столбцов
+		//РџРµСЂРµРѕРїСЂРµРґРµР»СЏРµРј РјРµС‚РѕРґ, РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ РЅР°Р·РІР°РЅРёСЏ СЃС‚РѕР»Р±С†РѕРІ
 		public String getColumnName(int colIndex) {
 			switch (colIndex){
 			case 0:
-				return "По вертикали";
+				return "РџРѕ РІРµСЂС‚РёРєР°Р»Рё";
 			case 1:
-				return "Зенитный угол";
+				return "Р—РµРЅРёС‚РЅС‹Р№ СѓРіРѕР»";
 			case 2:
-				return "По стволу";
+				return "РџРѕ СЃС‚РІРѕР»Сѓ";
 			}
 			return "";
 		}
 		
 		public void setValueAt(Object nval, int rowIndex, int colIndex) {
 			switch (colIndex){
-			//Глубина по вертикали
+			//Р“Р»СѓР±РёРЅР° РїРѕ РІРµСЂС‚РёРєР°Р»Рё
 			case 0:
 				
-				//Проверяем, является ли строка первой
+				//РџСЂРѕРІРµСЂСЏРµРј, СЏРІР»СЏРµС‚СЃСЏ Р»Рё СЃС‚СЂРѕРєР° РїРµСЂРІРѕР№
 				if (rowIndex == 0){
-									//Преобразуем строку в число
+									//РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ
 					double nval1 = Double.parseDouble(nval.toString());
-					//Записываем новое значение ячейки
+					//Р—Р°РїРёСЃС‹РІР°РµРј РЅРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ СЏС‡РµР№РєРё
 					Program.massiv[rowIndex][colIndex] = nval1;
 					Program.massiv[rowIndex][colIndex+2] = nval1;
 				}
 				else {
-					//Преобразуем вводимое значение в строку
+					//РџСЂРµРѕР±СЂР°Р·СѓРµРј РІРІРѕРґРёРјРѕРµ Р·РЅР°С‡РµРЅРёРµ РІ СЃС‚СЂРѕРєСѓ
 					String nv = nval.toString();
-					//Преобразуем строку в число
+					//РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ
 					double nval1 = Double.parseDouble(nv);
-					//Записываем новое значение ячейки
+					//Р—Р°РїРёСЃС‹РІР°РµРј РЅРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ СЏС‡РµР№РєРё
 					Program.massiv[rowIndex][colIndex] = nval1;
 					Geometry.CompareAngle(rowIndex);
 				};
 				
 				
-				//обновляем ячейки таблицы
+				//РѕР±РЅРѕРІР»СЏРµРј СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
 				fireTableCellUpdated(rowIndex, colIndex);
 				fireTableCellUpdated(rowIndex, colIndex+2);
 				return;

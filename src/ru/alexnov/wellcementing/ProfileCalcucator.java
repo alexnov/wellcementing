@@ -1,4 +1,4 @@
-package ru.alexnov.wellcementing;
+п»їpackage ru.alexnov.wellcementing;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -17,32 +17,32 @@ import javax.swing.border.EmptyBorder;
 
 public class ProfileCalcucator extends JFrame {
 	
-	//кнопка ОК
+	//РєРЅРѕРїРєР° РћРљ
 	private void okButtonActionPerformed(ActionEvent e){
 		this.setVisible(false);
 	}
 	
-	//Глубина по вертикали
+	//Р“Р»СѓР±РёРЅР° РїРѕ РІРµСЂС‚РёРєР°Р»Рё
 	private void vertFieldActionPerformed(ActionEvent e){
-		//преобразуем строку в число
+		//РїСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ
 		Double vert1 = Double.parseDouble(vertField.getText());
-		//находим глубину по стволу
+		//РЅР°С…РѕРґРёРј РіР»СѓР±РёРЅСѓ РїРѕ СЃС‚РІРѕР»Сѓ
 		Double lenght1 = Geometry.findLenght(vert1);
-		//переводим число в строку
+		//РїРµСЂРµРІРѕРґРёРј С‡РёСЃР»Рѕ РІ СЃС‚СЂРѕРєСѓ
 		String len = lenght1.toString();
-		//записываем значение в текстовое поле
+		//Р·Р°РїРёСЃС‹РІР°РµРј Р·РЅР°С‡РµРЅРёРµ РІ С‚РµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ
 		depthField.setText(len);
 	}
 	
-	//Глубина по стволу
+	//Р“Р»СѓР±РёРЅР° РїРѕ СЃС‚РІРѕР»Сѓ
 	private void depthFieldActionPerformed(ActionEvent e){
-		//преобразуем строку в число
+		//РїСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ
 		Double lenght1 = Double.parseDouble(depthField.getText());
-		//находим глубину по вертикали
+		//РЅР°С…РѕРґРёРј РіР»СѓР±РёРЅСѓ РїРѕ РІРµСЂС‚РёРєР°Р»Рё
 		Double vert1 = Geometry.findHeight(lenght1);
-		//переводим строку в число
+		//РїРµСЂРµРІРѕРґРёРј СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ
 		String ver = vert1.toString();
-		//записываем значение в текстовое поле
+		//Р·Р°РїРёСЃС‹РІР°РµРј Р·РЅР°С‡РµРЅРёРµ РІ С‚РµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ
 		vertField.setText(ver);
 		
 	}
@@ -52,15 +52,15 @@ public class ProfileCalcucator extends JFrame {
 	private JPanel panel1 = new JPanel();
 	private JPanel panel2 = new JPanel();
 	private JPanel buttonBar = new JPanel();
-	private JLabel label1 = new JLabel("по вертикали");
-	private JLabel label2 = new JLabel("по стволу");
+	private JLabel label1 = new JLabel("РїРѕ РІРµСЂС‚РёРєР°Р»Рё");
+	private JLabel label2 = new JLabel("РїРѕ СЃС‚РІРѕР»Сѓ");
 	private JTextField vertField = new JTextField();
 	private JTextField depthField = new JTextField();
 	private JButton okButton = new JButton("OK");
 	
 	public ProfileCalcucator(){
 		
-		super("Калькулятор профиля скважины");
+		super("РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ РїСЂРѕС„РёР»СЏ СЃРєРІР°Р¶РёРЅС‹");
 		setDefaultCloseOperation(HIDE_ON_CLOSE);
 		setSize(280, 150);
 		setResizable(false);
@@ -78,7 +78,7 @@ public class ProfileCalcucator extends JFrame {
 		depthField.setPreferredSize(new Dimension(70,20));
 		okButton.setPreferredSize(new Dimension(55,23));
 		
-		//Собираем
+		//РЎРѕР±РёСЂР°РµРј
 		panel1.add(label1);
 		panel1.add(vertField);
 		panel2.add(label2);
@@ -91,19 +91,19 @@ public class ProfileCalcucator extends JFrame {
 		contPane.add(dialogPane, BorderLayout.CENTER);
 		setLocationRelativeTo(getOwner());
 		
-		//Кнопка ОК
+		//РљРЅРѕРїРєР° РћРљ
 		okButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				okButtonActionPerformed(e);
 			}
 		});
-		//Вертикаль
+		//Р’РµСЂС‚РёРєР°Р»СЊ
 		vertField.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				vertFieldActionPerformed(e);
 			}
 		});
-		//По стволу
+		//РџРѕ СЃС‚РІРѕР»Сѓ
 		depthField.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				depthFieldActionPerformed(e);

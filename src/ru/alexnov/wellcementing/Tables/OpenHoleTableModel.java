@@ -1,4 +1,4 @@
-package ru.alexnov.wellcementing.Tables;
+п»їpackage ru.alexnov.wellcementing.Tables;
 
 import javax.swing.table.AbstractTableModel;
 import ru.alexnov.wellcementing.Geometry;
@@ -19,22 +19,22 @@ public class OpenHoleTableModel extends AbstractTableModel {
 		return MainWindow.index3;
 	}
 	
-	//Переопределяем метод, возвращающий названия столбцов
+	//РџРµСЂРµРѕРїСЂРµРґРµР»СЏРµРј РјРµС‚РѕРґ, РІРѕР·РІСЂР°С‰Р°СЋС‰РёР№ РЅР°Р·РІР°РЅРёСЏ СЃС‚РѕР»Р±С†РѕРІ
 	public String getColumnName(int colIndex) {
 		switch (colIndex){
 		case 0:
-			return "По вертикали, м";
+			return "РџРѕ РІРµСЂС‚РёРєР°Р»Рё, Рј";
 		case 1:
-			return "По стволу, м";
+			return "РџРѕ СЃС‚РІРѕР»Сѓ, Рј";
 		case 2:
-			return "Номинальный диаметр, м";
+			return "РќРѕРјРёРЅР°Р»СЊРЅС‹Р№ РґРёР°РјРµС‚СЂ, Рј";
 		case 3:
-			return "К-т кавернозности";
+			return "Рљ-С‚ РєР°РІРµСЂРЅРѕР·РЅРѕСЃС‚Рё";
 		}
 		return "";
 	}
 	
-	//Переопределяем метод, чтобы сделать ячейки редактируемыми
+	//РџРµСЂРµРѕРїСЂРµРґРµР»СЏРµРј РјРµС‚РѕРґ, С‡С‚РѕР±С‹ СЃРґРµР»Р°С‚СЊ СЏС‡РµР№РєРё СЂРµРґР°РєС‚РёСЂСѓРµРјС‹РјРё
 	public boolean isCellEditable(int rowIndex, int colIndex){
 		return true;
 	}
@@ -48,51 +48,51 @@ public class OpenHoleTableModel extends AbstractTableModel {
 catch (java.lang.NullPointerException e) {return "err";}	
 	}
 	
-	//Запись элемента таблицы в массив
+	//Р—Р°РїРёСЃСЊ СЌР»РµРјРµРЅС‚Р° С‚Р°Р±Р»РёС†С‹ РІ РјР°СЃСЃРёРІ
 			public void setValueAt(Object nval, int rowIndex, int colIndex) {
 				switch (colIndex){
-				//Глубина по вертикали
+				//Р“Р»СѓР±РёРЅР° РїРѕ РІРµСЂС‚РёРєР°Р»Рё
 				case 0:
-					//Преобразуем строку в число
+					//РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ
 					double nval1 = Double.parseDouble(nval.toString());
-					//Находим глубину по стволу в этой точке
+					//РќР°С…РѕРґРёРј РіР»СѓР±РёРЅСѓ РїРѕ СЃС‚РІРѕР»Сѓ РІ СЌС‚РѕР№ С‚РѕС‡РєРµ
 					double nval2 = Geometry.findLenght(nval1);
-					//Записываем новые значения ячеек
+					//Р—Р°РїРёСЃС‹РІР°РµРј РЅРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ СЏС‡РµРµРє
 					Program.openhole[rowIndex][colIndex] = nval1;
 					Program.openhole[rowIndex][colIndex+1] = nval2;
-					//Обновляем ячейки таблицы
+					//РћР±РЅРѕРІР»СЏРµРј СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
 					fireTableCellUpdated(rowIndex, colIndex);
 					fireTableCellUpdated(rowIndex, colIndex+1);
 					return;
-				//Глубина по стволу
+				//Р“Р»СѓР±РёРЅР° РїРѕ СЃС‚РІРѕР»Сѓ
 				case 1:
-					//Преобразуем строку в число
+					//РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ
 					double nval3 = Double.parseDouble(nval.toString());
-					//Находим глубину по вертикали в этой точке
+					//РќР°С…РѕРґРёРј РіР»СѓР±РёРЅСѓ РїРѕ РІРµСЂС‚РёРєР°Р»Рё РІ СЌС‚РѕР№ С‚РѕС‡РєРµ
 					double nval4 = Geometry.findHeight(nval3);
-					//Записываем новые значения ячеек
+					//Р—Р°РїРёСЃС‹РІР°РµРј РЅРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ СЏС‡РµРµРє
 					Program.openhole[rowIndex][colIndex] = nval3;
 					Program.openhole[rowIndex][colIndex-1] = nval4;
-					//Обновляем ячейки таблицы
+					//РћР±РЅРѕРІР»СЏРµРј СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
 					fireTableCellUpdated(rowIndex, colIndex);
 					fireTableCellUpdated(rowIndex, colIndex-1);
 					return;
-				//Номинальный диаметр
+				//РќРѕРјРёРЅР°Р»СЊРЅС‹Р№ РґРёР°РјРµС‚СЂ
 				case 2:
-					//Преобразуем строку в число
+					//РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ
 					double nval5 = Double.parseDouble(nval.toString());
-					//Записываем новые значения ячеек
+					//Р—Р°РїРёСЃС‹РІР°РµРј РЅРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ СЏС‡РµРµРє
 					Program.openhole[rowIndex][colIndex] = nval5;
-					//Обновляем ячейки таблицы
+					//РћР±РЅРѕРІР»СЏРµРј СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
 					fireTableCellUpdated(rowIndex, colIndex);
 					return;
-				//Коэффициент кавернозности
+				//РљРѕСЌС„С„РёС†РёРµРЅС‚ РєР°РІРµСЂРЅРѕР·РЅРѕСЃС‚Рё
 				case 3:
-					//Преобразуем строку в число
+					//РџСЂРµРѕР±СЂР°Р·СѓРµРј СЃС‚СЂРѕРєСѓ РІ С‡РёСЃР»Рѕ
 					double nval6 = Double.parseDouble(nval.toString());
-					//Записываем новые значения ячеек
+					//Р—Р°РїРёСЃС‹РІР°РµРј РЅРѕРІС‹Рµ Р·РЅР°С‡РµРЅРёСЏ СЏС‡РµРµРє
 					Program.openhole[rowIndex][colIndex] = nval6;
-					//Обновляем ячейки таблицы
+					//РћР±РЅРѕРІР»СЏРµРј СЏС‡РµР№РєРё С‚Р°Р±Р»РёС†С‹
 					fireTableCellUpdated(rowIndex, colIndex);
 					return;
 				
