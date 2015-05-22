@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.*;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -471,5 +473,97 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 			}
 		}
 	}
-	private void saveFile(){}
+	private void saveFile(){
+		JFileChooser filesave = new JFileChooser();
+		FileWriter myFile = null; 
+		BufferedWriter buff = null; 
+		int ret = filesave.showSaveDialog(null);
+		if (ret == JFileChooser.APPROVE_OPTION) {
+			//Создаём объект файла
+			File fileToSave = filesave.getSelectedFile();
+			try{
+				//Объект, позволяющий осуществить запись в файл
+				myFile =  new FileWriter(fileToSave);
+				//Буфер для записи
+				buff = new BufferedWriter(myFile);
+				//Записываем первую строку для идентификации формата файла
+				buff.write("dataofoilorgaswell");
+				buff.newLine();
+				//Записываем название месторождения
+				buff.write(fieldName.getText());
+				buff.newLine();
+				//Записываем номер куста
+				buff.write(bushName.getText());
+				buff.newLine();
+				//Записываем номер скважины
+				buff.write(wellNumber.getText());
+				buff.newLine();
+				//Записываем метку для профиля
+				buff.write("profile");
+				buff.newLine();
+				//Получаем последний значимый элемент массива профиля
+				int last = Geometry.lastElement();
+				//Считываем массив, конвертируем в строки и записываем в файл
+				for (int i = 0; i<last+1; i++){
+					for (int j=0; j<3; j++){
+						Double unit = (Double) Program.massiv[i][j];
+						String unit2 = unit.toString() + " ";
+						buff.write(unit2);
+					}
+					buff.newLine();
+				}
+				//Записываем метку для предыдущей колонны
+				buff.write("previous");
+				buff.newLine();
+				//Получаем последний значимый элемент массива предыдущей колонны
+				last = Geometry.lastPreviousElement();
+				//Считываем массив, конвертируем в строки и записываем в файл
+				for (int i = 0; i<last+1; i++){
+					for (int j=0; j<4; j++){
+						Double unit = (Double) Program.previous[i][j];
+						String unit2 = unit.toString() + " ";
+						buff.write(unit2);
+					}
+					buff.newLine();
+				}
+				//Записываем метку для открытого ствола
+				buff.write("openhole");
+				buff.newLine();
+				//Получаем последний значимый элемент массива открытого ствола
+				last = Geometry.lastOpenholeElement();
+				//Считываем массив, конвертируем в строки и записываем в файл
+				for (int i = 0; i<last+1; i++){
+					for (int j=0; j<4; j++){
+						Double unit = (Double) Program.openhole[i][j];
+						String unit2 = unit.toString() + " ";
+						buff.write(unit2);
+					}
+					buff.newLine();
+				}
+				
+				//Записываем метку для цементируемой колонны
+				buff.write("casing");
+				buff.newLine();
+				//Получаем последний значимый элемент массива цементируемой колонны
+				last = Geometry.lastCasingElement();
+				for (int i = 0; i<last+1; i++){
+					for (int j=0; j<4; j++){
+						Double unit = (Double) Program.casing[i][j];
+						String unit2 = unit.toString() + " ";
+						buff.write(unit2);
+					}
+					buff.newLine();
+				}
+				//Записываем временную метку конца файла
+				buff.write("end");
+			}catch (IOException e1) {e1.printStackTrace();
+			} finally {
+		    	try {
+		    		 buff.flush(); 
+		             buff.close(); 
+		             myFile.close();
+		    	} catch (IOException e2) {e2.printStackTrace();}
+			}
+		}
+	}
 }
