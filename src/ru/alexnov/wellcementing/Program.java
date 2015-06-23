@@ -10,7 +10,8 @@ public class Program {
 	public static double [][] previous = new double[10][4];
 	public static double [][] openhole = new double[10][4];
 	public static double [][] casing = new double[10][4];
-	static double [][] cements = new double[5][6];
+	public static double [][] cements = new double[5][6];
+	public static double [][] spacers = new double [5][4];
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -45,6 +46,12 @@ public class Program {
 						for (int i = 0; i<5; i++){
 							for (int j=0; j<6; j++){
 								cements[i][j] = 0.0;
+							}
+						}
+						//Инициализация буферов
+						for (int i = 0; i<5; i++){
+							for (int j=0; j<4; j++){
+								spacers[i][j] = 0.0;
 							}
 						}
 		

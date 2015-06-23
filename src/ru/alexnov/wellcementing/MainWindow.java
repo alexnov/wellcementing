@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -30,6 +31,7 @@ import ru.alexnov.wellcementing.Tables.CementingCasingTableModel;
 import ru.alexnov.wellcementing.Tables.OpenHoleTableModel;
 import ru.alexnov.wellcementing.Tables.PreviousTableModel;
 import ru.alexnov.wellcementing.Tables.ProfileTableModel;
+import ru.alexnov.wellcementing.Tables.SpacersTableModel;
 
 public class MainWindow extends JFrame {
 	
@@ -38,6 +40,7 @@ public class MainWindow extends JFrame {
 	public static int index3 = 1;//открытый ствол
 	public static int index4 = 1;//цементируемая колонна
 	public static int index5 = 1;//цементы
+	public static int index6 = 1;//буферы
 	
 	//создаем экземпляр профиля
 	ProfileTableModel profileSample = new ProfileTableModel();
@@ -47,6 +50,8 @@ public class MainWindow extends JFrame {
 	OpenHoleTableModel openholeSample = new OpenHoleTableModel();
 	//создаем экземпляр данных по цементируемой колонне
 	CementingCasingTableModel casingSample = new CementingCasingTableModel();
+	//экземпляр данных по буферным жидкостям
+	SpacersTableModel spacersSample = new SpacersTableModel();
 	
 	//Обработка нажатия клавиши + - добавляем единицу к счетчику и обновляем таблицу профиля
 	private void plusProfileActionPerformed(ActionEvent e) {
@@ -57,7 +62,7 @@ public class MainWindow extends JFrame {
 		//отнимаем единицу от счетчика и обновляем таблицу профиля
 		private void minusProfileActionPerformed(ActionEvent e) {
 			// TODO add your code here
-			if (index ==0){
+			if (index >1){
 			Program.massiv[index-1][0] = 0.0;
 			Program.massiv[index-1][1] = 0.0;
 			Program.massiv[index-1][2] = 0.0;
@@ -81,7 +86,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 		//Обработка нажатия клавиши "-" - обнуляем последнюю строку
 				//отнимаем единицу от счетчика и обновляем таблицу предыдущей колонны
 		private void minusPreviousActionPerformed(ActionEvent e){
-			if (index2 ==0){
+			if (index2 >1){
 			Program.previous[index2-1][0] = 0.0;
 			Program.previous[index2-1][1] = 0.0;
 			Program.previous[index2-1][2] = 0.0;
@@ -101,7 +106,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 		//Обработка нажатия клавиши "-" - обнуляем последнюю строку
 		//отнимаем единицу от счетчика и обновляем таблицу открытого ствола
 		private void minusOpenholeActionPerformed(ActionEvent e){
-			if (index3 ==0){
+			if (index3 >1){
 			Program.openhole[index3-1][0] = 0.0;
 			Program.openhole[index3-1][1] = 0.0;
 			Program.openhole[index3-1][2] = 0.0;
@@ -121,7 +126,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 				//Обработка нажатия клавиши "-" - обнуляем последнюю строку
 				//отнимаем единицу от счетчика и обновляем таблицу цементируемой колонны
 				private void minusCasingActionPerformed(ActionEvent e){
-					if (index4 ==0){	
+					if (index4 >1){	
 				Program.casing[index4-1][0] = 0.0;
 				Program.casing[index4-1][1] = 0.0;
 				Program.casing[index4-1][2] = 0.0;
@@ -132,6 +137,30 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 					else {
 JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка", JOptionPane.ERROR_MESSAGE);
 								}
+				}
+				//Обработка нажатия клавиши + - добавляем единицу к счетчику и обновляем таблицу буферов
+				private void plusSpacersActionPerformed(ActionEvent e) {
+					if (index6>4){
+JOptionPane.showMessageDialog(scroll1, "Максимальное количество порций - 5", "Ошибка", JOptionPane.ERROR_MESSAGE);						
+					}
+					else{
+					index6 = index6+1;
+					spacersSample.fireTableStructureChanged();}
+				}
+				//Обработка нажатия клавиши "-" - обнуляем последнюю строку
+				//отнимаем единицу от счетчика и обновляем таблицу буфера
+				private void minusSpacersActionPerformed(ActionEvent e){
+					if (index6>1){
+						Program.spacers[index6-1][0] = 0.0;
+						Program.spacers[index6-1][1] = 0.0;
+						Program.spacers[index6-1][2] = 0.0;
+						Program.spacers[index6-1][3] = 0.0;
+						index6 = index6-1;
+						spacersSample.fireTableStructureChanged();
+					}
+					else{
+JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка", JOptionPane.ERROR_MESSAGE);						
+					}
 				}
 		
 		JTabbedPane tabPanel = new JTabbedPane();
@@ -159,7 +188,6 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 		JButton plusPrevious = new JButton("+");
 		JButton minusPrevious = new JButton("-");
 		JPanel panel30 = new JPanel();
-		JScrollPane scroll200 = new JScrollPane();
 		JTable previousTable = new JTable(previousSample);
 		JPanel panel400 = new JPanel();
 		JLabel label6 = new JLabel("Открытый ствол");
@@ -167,7 +195,6 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 		JButton plusOpenhole = new JButton("+");
 		JButton minusOpenhole = new JButton("-");
 		JPanel panel40 = new JPanel();
-		JScrollPane scroll300 = new JScrollPane();
 		JTable openholeTable = new JTable(openholeSample);
 		JPanel panel500 = new JPanel();
 		JLabel label7 = new JLabel("Цементируемая колонна");
@@ -175,10 +202,9 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 		JButton plusCasing = new JButton("+");
 		JButton minusCasing = new JButton("-");
 		JPanel panel50 = new JPanel();
-		JScrollPane scroll400 = new JScrollPane();
+		
 		JTable casingTable = new JTable(casingSample);
 		JPanel panel101 = new JPanel();
-		JScrollPane scroll100 = new JScrollPane();
 		JTable profileTable = new JTable(profileSample);
 		JOptionPane message = new JOptionPane();
 		//Меню
@@ -187,7 +213,58 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 		JMenuItem openItem = new JMenuItem("Open");
 		JMenuItem saveItem = new JMenuItem("Save");
 		JMenuItem saveasItem = new JMenuItem("Save As...");
-	
+		//Вкладка "Технологические жидкости"
+		//Главная панель
+		JPanel pan = new JPanel();
+		//Четыре вложенные панели
+		JPanel boxPan[] = new JPanel[4];
+		//Семь надписей
+		JLabel labels[] = new JLabel[7];
+		//Надписи
+		String labs[] = {"Буровой раствор",
+		"Плотность, кг/м3",
+		"Пластическая вязкость, Па*с",
+		"Динамическое напряжение сдвига, Па",
+		"Буферные жидкости",
+		"Тампонажные растворы",
+		"Продавочная жидкость"
+		};
+		//Четыре панели, вложенные в boxPan[0]
+		JPanel boxPan0[] = new JPanel[4];
+		//Текстовые поля
+		JTextField mudW = new JTextField();
+		JTextField mudV = new JTextField();
+		JTextField mudY = new JTextField();
+		//Панели буферной жидкости
+		JPanel pan11 = new JPanel();
+		JPanel pan12 = new JPanel();
+		JPanel pan111 = new JPanel();
+		JPanel pan112 = new JPanel();
+		//Панели цементного раствора
+		JPanel pan21 = new JPanel();
+		JPanel pan22 = new JPanel();
+		JPanel pan211 = new JPanel();
+		JPanel pan212 = new JPanel();
+		//Панели продавочной жидкости
+		JPanel pan31 = new JPanel();
+		JPanel pan32 = new JPanel();
+		JPanel pan321 = new JPanel();
+		JPanel pan322 = new JPanel();
+		JPanel pan33 = new JPanel();
+		//Кнопки
+		JButton plusSpacer = new JButton("+");
+		JButton minusSpacer = new JButton("-");
+		JButton plusCement = new JButton("+");
+		JButton minusCement = new JButton("-");
+		JButton plusMud = new JButton("+");
+		JButton minusMud = new JButton("-");
+		//таблицы
+		JTable spacerTable = new JTable(spacersSample);
+		JTable cementTable = new JTable();
+		JTable mudTable = new JTable();
+		//переключатель
+		JCheckBox mudnomud = new JCheckBox("Использовать в качестве продавочной жидкости буровой раствор");
+		
 	public MainWindow(){
 		
 		super("Ввод исходных данных");
@@ -229,9 +306,9 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 				panel30.add(panel300);
 				panel30.add(panel301);
 				//Таблица для предыдущей колонны
-				previousTable.setPreferredSize(new Dimension(580, 80));
-				scroll200.setViewportView(previousTable);
-				previousTable.setPreferredScrollableViewportSize(new Dimension(580, 80));
+				JScrollPane scroll200 = new JScrollPane(previousTable);
+				
+				previousTable.setPreferredScrollableViewportSize(new Dimension(580, 70));
 				//Панель с надписью открытый ствол
 				panel400.setLayout(new FlowLayout(FlowLayout.LEFT));
 				panel400.add(label6);
@@ -244,9 +321,9 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 				panel40.add(panel400);
 				panel40.add(panel401);
 				//Таблица для открытого ствола
-				openholeTable.setPreferredSize(new Dimension(580, 80));
-				scroll300.setViewportView(openholeTable);
-				openholeTable.setPreferredScrollableViewportSize(new Dimension(580, 80));
+				JScrollPane scroll300 = new JScrollPane(openholeTable);
+				
+				openholeTable.setPreferredScrollableViewportSize(new Dimension(580, 70));
 				//Панель с надписью цементируемая колонна
 				panel500.setLayout(new FlowLayout(FlowLayout.LEFT));
 				panel500.add(label7);
@@ -259,14 +336,78 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 				panel50.add(panel500);
 				panel50.add(panel501);
 				//Таблица для цементируемой колонны
-				casingTable.setPreferredSize(new Dimension(580, 80));
-				scroll400.setViewportView(casingTable);
-				casingTable.setPreferredScrollableViewportSize(new Dimension(580, 80));
-				panel101.setLayout(new BoxLayout(panel101, BoxLayout.X_AXIS));
-				profileTable.setPreferredSize(new Dimension(580, 80));
-				profileTable.setPreferredScrollableViewportSize(new Dimension(580, 80));
+				JScrollPane scroll400 = new JScrollPane(casingTable);
 				
-				scroll100.setViewportView(profileTable);
+				
+				casingTable.setPreferredScrollableViewportSize(new Dimension(580, 70));
+				panel101.setLayout(new BoxLayout(panel101, BoxLayout.X_AXIS));
+				
+				profileTable.setPreferredScrollableViewportSize(new Dimension(580, 70));
+				
+				//Вторая вкладка
+				pan.setLayout(new BoxLayout(pan, BoxLayout.Y_AXIS));
+				for (int i9=0; i9<4; i9++){
+					boxPan[i9] = new JPanel();
+					boxPan[i9].setLayout(new BoxLayout(boxPan[i9], BoxLayout.Y_AXIS));
+				};
+				for (int i9=0; i9<4; i9++){
+					boxPan0[i9] = new JPanel();
+					boxPan0[i9].setLayout(new FlowLayout(FlowLayout.LEADING));
+				};
+				for (int i9=0; i9<7; i9++){
+					labels[i9] = new JLabel(labs[i9]);
+				};
+				labels[1].setPreferredSize(new Dimension(195,20));
+				labels[2].setPreferredSize(new Dimension(195,20));
+				mudW.setPreferredSize(new Dimension(50,20));
+				mudV.setPreferredSize(new Dimension(50,20));
+				mudY.setPreferredSize(new Dimension(50,20));
+				//Буферные жидкости
+				pan11.setLayout(new BoxLayout(pan11, BoxLayout.X_AXIS));
+				pan111.setLayout(new FlowLayout(FlowLayout.LEFT));
+				pan112.setLayout(new FlowLayout(FlowLayout.RIGHT));
+				pan111.add(labels[4]);
+				pan112.add(minusSpacer);
+				pan112.add(plusSpacer);
+				pan11.add(pan111);
+				pan11.add(pan112);
+				JScrollPane scroll21 = new JScrollPane(spacerTable);
+				spacerTable.setPreferredScrollableViewportSize(new Dimension(570, 90));
+				pan12.add(scroll21);
+				
+				//Тампонажные растворы
+				pan21.setLayout(new BoxLayout(pan21, BoxLayout.X_AXIS));
+				pan211.setLayout(new FlowLayout(FlowLayout.LEFT));
+				pan212.setLayout(new FlowLayout(FlowLayout.RIGHT));
+				pan211.add(labels[5]);
+				pan212.add(minusCement);
+				pan212.add(plusCement);
+				pan21.add(pan211);
+				pan21.add(pan212);
+				JScrollPane scroll22 = new JScrollPane(cementTable);
+				cementTable.setPreferredScrollableViewportSize(new Dimension(570, 90));
+				pan22.add(scroll22);
+				//Продавочная жидкость
+				pan31.setLayout(new FlowLayout(FlowLayout.CENTER));
+				pan32.setLayout(new BoxLayout(pan32, BoxLayout.X_AXIS));
+				pan321.setLayout(new FlowLayout(FlowLayout.LEFT));
+				pan322.setLayout(new FlowLayout(FlowLayout.RIGHT));
+				pan321.add(labels[6]);
+				pan322.add(minusMud);
+				pan322.add(plusMud);
+				pan31.add(mudnomud);
+				pan32.add(pan321);
+				pan32.add(pan322);
+				JScrollPane scroll23 = new JScrollPane(mudTable);
+				mudTable.setPreferredScrollableViewportSize(new Dimension(570, 90));
+				pan33.add(scroll23);
+				
+		
+				
+				
+				JScrollPane scroll100 = new JScrollPane(profileTable);
+				profileTable.setPreferredScrollableViewportSize(new Dimension(580, 70));
+				
 				setJMenuBar(menuBar);
 				
 				//Обработка событий
@@ -328,6 +469,18 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 						minusCasingActionPerformed(e);
 					}
 				});
+				//Буферы +
+				plusSpacer.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						plusSpacersActionPerformed(e);
+					}
+				});
+				//Буферы -
+				minusSpacer.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						minusSpacersActionPerformed(e);
+					}
+				});
 				//Меню открыть файл
 				openItem.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -362,7 +515,31 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 				panel100.add(label3);
 				panel100.add(wellNumber);	
 				
+		boxPan0[0].add(labels[0]);
+		boxPan0[1].add(labels[1]);
+		boxPan0[1].add(mudW);
+		boxPan0[2].add(labels[2]);
+		boxPan0[2].add(mudV);
+		boxPan0[3].add(labels[3]);
+		boxPan0[3].add(mudY);
+		boxPan[0].add(boxPan0[0]);
+		boxPan[0].add(boxPan0[1]);
+		boxPan[0].add(boxPan0[2]);
+		boxPan[0].add(boxPan0[3]);
+		boxPan[1].add(pan11);
+		boxPan[1].add(pan12);
+		boxPan[2].add(pan21);
+		boxPan[2].add(pan22);
+		boxPan[3].add(pan31);
+		boxPan[3].add(pan32);
+		boxPan[3].add(pan33);
+		pan.add(boxPan[0]);
+		pan.add(boxPan[1]);
+		pan.add(boxPan[2]);
+		pan.add(boxPan[3]);
+				
 		scroll1.setViewportView(panel1);
+		scroll2.setViewportView(pan);
 		
 		tabPanel.addTab("Конструкция скважины", scroll1);
 		tabPanel.addTab("Технологические жидкости", scroll2);
