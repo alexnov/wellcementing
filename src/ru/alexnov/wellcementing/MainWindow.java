@@ -26,8 +26,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import ru.alexnov.wellcementing.Tables.CementingCasingTableModel;
+import ru.alexnov.wellcementing.Tables.CementsTableModel;
 import ru.alexnov.wellcementing.Tables.OpenHoleTableModel;
 import ru.alexnov.wellcementing.Tables.PreviousTableModel;
 import ru.alexnov.wellcementing.Tables.ProfileTableModel;
@@ -52,6 +54,8 @@ public class MainWindow extends JFrame {
 	CementingCasingTableModel casingSample = new CementingCasingTableModel();
 	//экземпляр данных по буферным жидкостям
 	SpacersTableModel spacersSample = new SpacersTableModel();
+	//экземпляр данных по цементным растворам
+	CementsTableModel cementsSample = new CementsTableModel();
 	
 	//Обработка нажатия клавиши + - добавляем единицу к счетчику и обновляем таблицу профиля
 	private void plusProfileActionPerformed(ActionEvent e) {
@@ -162,6 +166,30 @@ JOptionPane.showMessageDialog(scroll1, "Максимальное количес�
 JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя удалить", "Ошибка", JOptionPane.ERROR_MESSAGE);						
 					}
 				}
+				//Обработка нажатия клавиши + - добавляем единицу к счетчику и обновляем таблицу цементов
+				private void plusCementActionPerformed(ActionEvent e) {
+					if (index5>4){
+JOptionPane.showMessageDialog(pan22, "Максимальное количество порций - 5", "Ошибка", JOptionPane.ERROR_MESSAGE);						
+					}
+					else{
+					index5 = index5+1;
+					cementsSample.fireTableStructureChanged();}
+				}
+				//Обработка нажатия клавиши "-" - обнуляем последнюю строку
+				//отнимаем единицу от счетчика и обновляем таблицу цементов
+				private void minusCementActionPerformed(ActionEvent e){
+					if (index5>1){
+						Program.cements[index5-1][0] = 0.0;
+						Program.cements[index5-1][1] = 0.0;
+						Program.cements[index5-1][2] = 0.0;
+						Program.cements[index5-1][3] = 0.0;
+						index5 = index5-1;
+						cementsSample.fireTableStructureChanged();
+					}
+					else{
+JOptionPane.showMessageDialog(pan22, "Первую строку нельзя удалить", "Ошибка", JOptionPane.ERROR_MESSAGE);						
+					}
+				}
 		
 		JTabbedPane tabPanel = new JTabbedPane();
 	    JScrollPane scroll1 = new JScrollPane();
@@ -198,7 +226,11 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 		JTable openholeTable = new JTable(openholeSample);
 		JPanel panel500 = new JPanel();
 		JLabel label7 = new JLabel("Цементируемая колонна");
+		JLabel label8 = new JLabel("Объем продавки");
+		JLabel label9 = new JLabel("м3");
+		public static JLabel prodavka = new JLabel("0.0");
 		JPanel panel501 = new JPanel();
+		JPanel panel502 = new JPanel();
 		JButton plusCasing = new JButton("+");
 		JButton minusCasing = new JButton("-");
 		JPanel panel50 = new JPanel();
@@ -260,7 +292,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 		JButton minusMud = new JButton("-");
 		//таблицы
 		JTable spacerTable = new JTable(spacersSample);
-		JTable cementTable = new JTable();
+		JTable cementTable = new JTable(cementsSample);
 		JTable mudTable = new JTable();
 		//переключатель
 		JCheckBox mudnomud = new JCheckBox("Использовать в качестве продавочной жидкости буровой раствор");
@@ -331,6 +363,13 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 				panel501.setLayout(new FlowLayout(FlowLayout.RIGHT));
 				panel501.add(minusCasing);
 				panel501.add(plusCasing);
+				//Панель с объемом продавки
+				panel502.setLayout(new FlowLayout(FlowLayout.CENTER));
+				prodavka.setPreferredSize(new Dimension(50,20));
+				prodavka.setHorizontalAlignment(SwingConstants.CENTER);
+				panel502.add(label8);
+				panel502.add(prodavka);
+				panel502.add(label9);
 				//Объединяем две панели в одно
 				panel50.setLayout(new BoxLayout(panel50, BoxLayout.X_AXIS));
 				panel50.add(panel500);
@@ -364,6 +403,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 				mudY.setPreferredSize(new Dimension(50,20));
 				//Буферные жидкости
 				pan11.setLayout(new BoxLayout(pan11, BoxLayout.X_AXIS));
+				pan12.setLayout(new BoxLayout(pan12, BoxLayout.X_AXIS));
 				pan111.setLayout(new FlowLayout(FlowLayout.LEFT));
 				pan112.setLayout(new FlowLayout(FlowLayout.RIGHT));
 				pan111.add(labels[4]);
@@ -377,6 +417,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 				
 				//Тампонажные растворы
 				pan21.setLayout(new BoxLayout(pan21, BoxLayout.X_AXIS));
+				pan22.setLayout(new BoxLayout(pan22, BoxLayout.X_AXIS));
 				pan211.setLayout(new FlowLayout(FlowLayout.LEFT));
 				pan212.setLayout(new FlowLayout(FlowLayout.RIGHT));
 				pan211.add(labels[5]);
@@ -481,6 +522,18 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 						minusSpacersActionPerformed(e);
 					}
 				});
+				//Цементы +
+				plusCement.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						plusCementActionPerformed(e);
+					}
+				});
+				//Цементы -
+				minusCement.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						minusCementActionPerformed(e);
+					}
+				});
 				//Меню открыть файл
 				openItem.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -504,6 +557,7 @@ JOptionPane.showMessageDialog(scroll1, "Первую строку нельзя �
 				panel1.add(panel40);
 				panel1.add(scroll300);
 				panel1.add(panel50);
+				panel1.add(panel502);
 				panel1.add(scroll400);
 			
 				panel10.add(panel100);

@@ -60,6 +60,8 @@ catch (java.lang.NullPointerException e) {return "err";}
 			//Обновляем ячейки таблицы
 			fireTableCellUpdated(rowIndex, colIndex);
 			fireTableCellUpdated(rowIndex, colIndex+1);
+			//пересчитываем объем продавки
+			MainWindow.prodavka.setText(casingVolume());
 			return;
 			//Глубина по стволу
 		case 1:
@@ -73,6 +75,8 @@ catch (java.lang.NullPointerException e) {return "err";}
 			//Обновляем ячейки таблицы
 			fireTableCellUpdated(rowIndex, colIndex);
 			fireTableCellUpdated(rowIndex, colIndex-1);
+			//пересчитываем объем продавки
+			MainWindow.prodavka.setText(casingVolume());
 			return;
 			//диаметр обсадной колонны
 		case 2:
@@ -82,8 +86,10 @@ catch (java.lang.NullPointerException e) {return "err";}
 			Program.casing[rowIndex][colIndex] = nval5;
 			//Обновляем ячейки таблицы
 			fireTableCellUpdated(rowIndex, colIndex);
+			//пересчитываем объем продавки
+			MainWindow.prodavka.setText(casingVolume());
 			return;
-			//Коэффициент кавернозности
+			//Толщина стенки
 		case 3:
 			//Преобразуем строку в число
 			double nval6 = Double.parseDouble(nval.toString());
@@ -91,9 +97,31 @@ catch (java.lang.NullPointerException e) {return "err";}
 			Program.casing[rowIndex][colIndex] = nval6;
 			//Обновляем ячейки таблицы
 			fireTableCellUpdated(rowIndex, colIndex);
+			//пересчитываем объем продавки
+			MainWindow.prodavka.setText(casingVolume());
 			return;
 		}
 		
+	}
+	
+	//Объем обсадной колонны
+	private String casingVolume(){
+		//Получаем последний значимый элемент массива
+		int last = Geometry.lastCasingElement();
+		int i = 0;
+		double vol = 0.0;
+		while (i<=last){
+			//Внутренний диаметр текущего интервала 
+			double inner = Program.casing[i][2] - 2.0*Program.casing[i][3];
+			//Объем текущего интервала
+			if (i==0){
+				vol = vol + (Math.PI/4)*inner*inner*Program.casing[i][1];}
+			else{
+			vol = vol + (Math.PI/4)*inner*inner*(Program.casing[i][1]-Program.casing[i-1][1]);}
+			i++;
+		}
+		double vol1 = (Math.round(vol*100))/100.0;
+		return String.valueOf(vol1);
 	}
 
 
