@@ -34,7 +34,7 @@ public class CementsVolume {
 		
 		//Вычисление объема обсадной колонны
 		private static double calcCasingVolume(double top, double bottom){
-			return calcCasing(top) - calcCasing(bottom);
+			return calcCasing(bottom) - calcCasing(top);
 		}
 		
 		//Объем обсадной колонны от устья до заданной глубины
@@ -53,7 +53,7 @@ public class CementsVolume {
 		private static double calcOpenHole(double height){
 			double openhole = 0.0;
 			int i = 0;
-			while (i<=Geometry.lastOpenholeElement()){
+ 			while (i<=Geometry.lastOpenholeElement()){
 				if (height >= Program.openhole[i][1]) {openhole = openhole + calcOpenUnit(i);}
 				else {openhole = openhole + calcPartOpenUnit(i,height); break;}
 				i++;

@@ -73,7 +73,8 @@ public class CementsTableModel extends AbstractTableModel {
 			double nval1 = Double.parseDouble(nval.toString());
 			Program.cements[rowIndex][colIndex] = nval1;
 			//Рассчитываем значение объема цемента
-Program.cements[rowIndex][colIndex+2] = CementsVolume.calcCementVolume(Program.cements[rowIndex][colIndex+1], nval1);
+			double nval3 = CementsVolume.calcCementVolume(Program.cements[rowIndex][colIndex+1], nval1);
+            Program.cements[rowIndex][colIndex+2] = (Math.round(nval3*100))/100.0;
 			//Обновляем ячейки таблицы
 			fireTableCellUpdated(rowIndex, colIndex);
 			fireTableCellUpdated(rowIndex, colIndex+2);
@@ -83,7 +84,8 @@ Program.cements[rowIndex][colIndex+2] = CementsVolume.calcCementVolume(Program.c
 			double nval2 = Double.parseDouble(nval.toString());
 			Program.cements[rowIndex][colIndex] = nval2;
 			//Рассчитываем значение объема цемента
-Program.cements[rowIndex][colIndex+1] = CementsVolume.calcCementVolume(nval2, Program.cements[rowIndex][colIndex-1]);
+			double nval4 = CementsVolume.calcCementVolume(nval2, Program.cements[rowIndex][colIndex-1]);
+			Program.cements[rowIndex][colIndex+1] = (Math.round(nval4*100))/100.0;
 			//Обновляем ячейки таблицы
 			fireTableCellUpdated(rowIndex, colIndex);
 			fireTableCellUpdated(rowIndex, colIndex+1);

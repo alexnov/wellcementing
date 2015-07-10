@@ -241,10 +241,12 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 		JOptionPane message = new JOptionPane();
 		//Меню
 		JMenuBar menuBar = new JMenuBar();
-		JMenu fileMenu = new JMenu("File");
-		JMenuItem openItem = new JMenuItem("Open");
-		JMenuItem saveItem = new JMenuItem("Save");
-		JMenuItem saveasItem = new JMenuItem("Save As...");
+		JMenu fileMenu = new JMenu("Файл");
+		JMenuItem openItem = new JMenuItem("Открыть");
+		JMenuItem saveItem = new JMenuItem("Сохранить");
+		JMenuItem saveasItem = new JMenuItem("Сохранить как...");
+		JMenu aboutMenu = new JMenu("Помощь");
+		JMenuItem aboutItem = new JMenuItem("О программе");
 		//Вкладка "Технологические жидкости"
 		//Главная панель
 		JPanel pan = new JPanel();
@@ -306,7 +308,9 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 		fileMenu.add(openItem);
 		fileMenu.add(saveItem);
 		fileMenu.add(saveasItem);
+		aboutMenu.add(aboutItem);
 		menuBar.add(fileMenu);
+		menuBar.add(aboutMenu);
 		
 		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 		panel10.setLayout(new BoxLayout(panel10, BoxLayout.Y_AXIS));
@@ -544,6 +548,15 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 				saveasItem.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						saveFile();
+					}
+				});
+				//Меню about
+				aboutItem.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						About ab = new About();
+						ab.setVisible(true);
+						ab.setSize(new Dimension(300, 250));
+						ab.setResizable(false);
 					}
 				});
 				
