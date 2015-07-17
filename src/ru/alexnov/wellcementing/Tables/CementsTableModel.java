@@ -8,6 +8,11 @@ import ru.alexnov.wellcementing.Program;
 
 public class CementsTableModel extends AbstractTableModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
@@ -89,6 +94,22 @@ public class CementsTableModel extends AbstractTableModel {
 			//Обновляем ячейки таблицы
 			fireTableCellUpdated(rowIndex, colIndex);
 			fireTableCellUpdated(rowIndex, colIndex+1);
+			return;
+		case 3:
+			double nval5 = Double.parseDouble(nval.toString());
+			Program.cements[rowIndex][colIndex] = nval5;
+			fireTableCellUpdated(rowIndex, colIndex);
+			return;
+		case 4:
+			double nval6 = Double.parseDouble(nval.toString());
+			Program.cements[rowIndex][colIndex] = nval6;
+			fireTableCellUpdated(rowIndex, colIndex);
+			return;
+		case 5:
+			double nval7 = Double.parseDouble(nval.toString());
+			Program.cements[rowIndex][colIndex] = nval7;
+			fireTableCellUpdated(rowIndex, colIndex);
+			return;
 		}
 	}
 

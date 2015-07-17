@@ -48,5 +48,11 @@ public class SpacersTableModel extends AbstractTableModel {
 		// TODO Auto-generated method stub
 		return Program.spacers[rowIndex][colIndex];
 	}
+	
+	public void setValueAt(Object nval, int rowIndex, int colIndex){
+			double nval1 = Double.parseDouble(nval.toString());
+			Program.spacers[rowIndex][colIndex] = nval1;
+			fireTableCellUpdated(rowIndex, colIndex);
+	}
 
 }

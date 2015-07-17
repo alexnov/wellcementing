@@ -188,7 +188,6 @@ public class CementsVolume {
 			double vol = 0.0;
 			double l0 = 0.0;
 			//Глубина по стволу текущего участка
-					double l1 = Program.previous[i][1];
 					//Глубина по стволу предыдущего участка
 					if (i>0) {l0 = Program.previous[i-1][1];}
 					//Наружный диаметр колонны

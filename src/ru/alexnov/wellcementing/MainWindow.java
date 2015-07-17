@@ -27,9 +27,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import ru.alexnov.wellcementing.Tables.CementingCasingTableModel;
 import ru.alexnov.wellcementing.Tables.CementsTableModel;
+import ru.alexnov.wellcementing.Tables.MudsTableModel;
 import ru.alexnov.wellcementing.Tables.OpenHoleTableModel;
 import ru.alexnov.wellcementing.Tables.PreviousTableModel;
 import ru.alexnov.wellcementing.Tables.ProfileTableModel;
@@ -37,12 +40,17 @@ import ru.alexnov.wellcementing.Tables.SpacersTableModel;
 
 public class MainWindow extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static int index = 1;//профиль
 	public static int index2 = 1;//предыдущая колонна
 	public static int index3 = 1;//открытый ствол
 	public static int index4 = 1;//цементируемая колонна
 	public static int index5 = 1;//цементы
 	public static int index6 = 1;//буферы
+	public static int index7 = 1;//буферы
 	
 	//создаем экземпляр профиля
 	ProfileTableModel profileSample = new ProfileTableModel();
@@ -56,6 +64,8 @@ public class MainWindow extends JFrame {
 	SpacersTableModel spacersSample = new SpacersTableModel();
 	//экземпляр данных по цементным растворам
 	CementsTableModel cementsSample = new CementsTableModel();
+	//экземпляр данных по продавке
+	MudsTableModel mudsSample = new MudsTableModel();
 	
 	//Обработка нажатия клавиши + - добавляем единицу к счетчику и обновляем таблицу профиля
 	private void plusProfileActionPerformed(ActionEvent e) {
@@ -190,6 +200,94 @@ JOptionPane.showMessageDialog(pan22, "Максимальное количест�
 JOptionPane.showMessageDialog(pan22, "Первую строку нельзя удалить", "Ошибка", JOptionPane.ERROR_MESSAGE);						
 					}
 				}
+				//Обработка нажатия клавиши + - добавляем единицу к счетчику и обновляем таблицу продавки
+				private void plusMudsActionPerformed(ActionEvent e) {
+					if (index7>4){
+JOptionPane.showMessageDialog(pan22, "Максимальное количество порций - 5", "Ошибка", JOptionPane.ERROR_MESSAGE);						
+					}
+					else{
+					index7 = index7+1;
+					mudsSample.fireTableStructureChanged();}
+				}
+				//Обработка нажатия клавиши "-" - обнуляем последнюю строку
+				//отнимаем единицу от счетчика и обновляем таблицу продавки
+				private void minusMudsActionPerformed(ActionEvent e){
+					if (index7>1){
+						Program.muds[index7-1][0] = 0.0;
+						Program.muds[index7-1][1] = 0.0;
+						Program.muds[index7-1][2] = 0.0;
+						Program.muds[index7-1][3] = 0.0;
+						index7 = index7-1;
+						mudsSample.fireTableStructureChanged();
+					}
+					else{
+JOptionPane.showMessageDialog(pan22, "Первую строку нельзя удалить", "Ошибка", JOptionPane.ERROR_MESSAGE);						
+					}
+				}
+				//Чекбокс
+				private void muditemStateChanged(ItemEvent e){
+					if (mudnomud.isSelected()){
+					plusMud.setEnabled(false);
+					minusMud.setEnabled(false);
+					Program.muds[index7-1][1] = Double.parseDouble(mudW.getText());
+					Program.muds[index7-1][2] = Double.parseDouble(mudV.getText());
+					Program.muds[index7-1][3] = Double.parseDouble(mudY.getText());
+					Program.muds[index7-1][0] = Double.parseDouble(prodavka.getText());
+					mudsSample.fireTableDataChanged();
+					}
+					else {
+						plusMud.setEnabled(true);
+						minusMud.setEnabled(true);
+					}
+				}
+				//Поле плотности бурового раствора
+				DocumentListener mudprodW = new DocumentListener(){
+					public void removeUpdate(DocumentEvent event){
+						if (mudnomud.isSelected()){
+							Program.muds[index7-1][1] = Double.parseDouble(mudW.getText());
+							mudsSample.fireTableDataChanged();
+						}
+					}
+					public void insertUpdate(DocumentEvent event){
+						if (mudnomud.isSelected()){
+							Program.muds[index7-1][1] = Double.parseDouble(mudW.getText());
+							mudsSample.fireTableDataChanged();
+						}
+					}
+					public void changedUpdate(DocumentEvent event){}
+				};
+				//Поле вязкости бурового раствора
+				DocumentListener mudprodV = new DocumentListener(){
+					public void removeUpdate(DocumentEvent event){
+						if (mudnomud.isSelected()){
+							Program.muds[index7-1][2] = Double.parseDouble(mudV.getText());
+							mudsSample.fireTableDataChanged();
+						}
+					}
+					public void insertUpdate(DocumentEvent event){
+						if (mudnomud.isSelected()){
+							Program.muds[index7-1][2] = Double.parseDouble(mudV.getText());
+							mudsSample.fireTableDataChanged();
+						}
+					}
+					public void changedUpdate(DocumentEvent event){}
+				};
+				//Поле ДНС бурового раствора
+				DocumentListener mudprodY = new DocumentListener(){
+					public void removeUpdate(DocumentEvent event){
+						if (mudnomud.isSelected()){
+							Program.muds[index7-1][3] = Double.parseDouble(mudY.getText());
+							mudsSample.fireTableDataChanged();
+						}
+					}
+					public void insertUpdate(DocumentEvent event){
+						if (mudnomud.isSelected()){
+							Program.muds[index7-1][3] = Double.parseDouble(mudY.getText());
+							mudsSample.fireTableDataChanged();
+						}
+					}
+					public void changedUpdate(DocumentEvent event){}
+				};
 		
 		JTabbedPane tabPanel = new JTabbedPane();
 	    JScrollPane scroll1 = new JScrollPane();
@@ -266,9 +364,9 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 		//Четыре панели, вложенные в boxPan[0]
 		JPanel boxPan0[] = new JPanel[4];
 		//Текстовые поля
-		JTextField mudW = new JTextField();
-		JTextField mudV = new JTextField();
-		JTextField mudY = new JTextField();
+		JTextField mudW = new JTextField("0.0");
+		JTextField mudV = new JTextField("0.0");
+		JTextField mudY = new JTextField("0.0");
 		//Панели буферной жидкости
 		JPanel pan11 = new JPanel();
 		JPanel pan12 = new JPanel();
@@ -295,7 +393,7 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 		//таблицы
 		JTable spacerTable = new JTable(spacersSample);
 		JTable cementTable = new JTable(cementsSample);
-		JTable mudTable = new JTable();
+		JTable mudTable = new JTable(mudsSample);
 		//переключатель
 		JCheckBox mudnomud = new JCheckBox("Использовать в качестве продавочной жидкости буровой раствор");
 		
@@ -538,6 +636,30 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 						minusCementActionPerformed(e);
 					}
 				});
+				//Продавки +
+				plusMud.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						plusMudsActionPerformed(e);
+					}
+				});
+				//Продавки -
+				minusMud.addActionListener(new ActionListener(){
+					public void actionPerformed(ActionEvent e){
+						minusMudsActionPerformed(e);
+					}
+				});
+				//Чекбокс
+				mudnomud.addItemListener(new ItemListener(){
+					public void itemStateChanged(ItemEvent e){
+						muditemStateChanged(e);
+					}
+				});
+				//Поле плотности бурового раствора
+				mudW.getDocument().addDocumentListener(mudprodW);
+				//Поле вязкости бурового раствора
+				mudV.getDocument().addDocumentListener(mudprodV);
+				//Поле ДНС бурового раствора
+				mudY.getDocument().addDocumentListener(mudprodY);
 				//Меню открыть файл
 				openItem.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
@@ -698,6 +820,7 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 						Program.casing[j][3] = Double.parseDouble(oneline[3]);
 						index4 = index4+1;
 						casingSample.fireTableStructureChanged();
+						prodavka.setText(CementingCasingTableModel.casingVolume());
 						i++;
 						j++;
 						}

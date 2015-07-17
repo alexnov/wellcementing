@@ -105,7 +105,7 @@ catch (java.lang.NullPointerException e) {return "err";}
 	}
 	
 	//Объем обсадной колонны
-	private String casingVolume(){
+	public static String casingVolume(){
 		//Получаем последний значимый элемент массива
 		int last = Geometry.lastCasingElement();
 		int i = 0;

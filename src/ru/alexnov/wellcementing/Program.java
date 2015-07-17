@@ -12,6 +12,7 @@ public class Program {
 	public static double [][] casing = new double[10][4];
 	public static double [][] cements = new double[5][6];
 	public static double [][] spacers = new double [5][4];
+	public static double [][] muds = new double [5][4];
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -54,10 +55,18 @@ public class Program {
 								spacers[i][j] = 0.0;
 							}
 						}
+						//Инициализация массива продавки
+						//Инициализация буферов
+						for (int i = 0; i<5; i++){
+							for (int j=0; j<4; j++){
+								muds[i][j] = 0.0;
+							}
+						}
 		
 						try {
 					          // устанавливаем LookAndFeel
 							//UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
+							//UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 							//UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 							UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 					      } catch (UnsupportedLookAndFeelException e) {

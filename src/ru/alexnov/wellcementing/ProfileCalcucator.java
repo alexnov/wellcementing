@@ -17,6 +17,11 @@ import javax.swing.border.EmptyBorder;
 
 public class ProfileCalcucator extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5774803833482770694L;
+
 	//кнопка ОК
 	private void okButtonActionPerformed(ActionEvent e){
 		this.setVisible(false);
