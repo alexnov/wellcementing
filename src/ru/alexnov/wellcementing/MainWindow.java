@@ -921,6 +921,30 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 					}
 					buff.newLine();
 				}
+				//Записываем метку для плотности бурового раствора
+				buff.write("mud_weight");
+				buff.newLine();
+				buff.write(mudW.getText());
+				buff.newLine();
+				//Записываем метку для вязкости бурового раствора
+				buff.write("mud_visc");
+				buff.newLine();
+				buff.write(mudV.getText());
+				//Записываем метку для ДНС бурового раствора
+				buff.write("mud_yeld");
+				buff.newLine();
+				buff.write(mudY.getText());
+				buff.newLine();
+				//Записываем метку для буферных жидкостей
+				buff.write("spacers");
+				for (int i=0; i<5; i++){
+					for (int j=0; j<4; j++){
+						Double unit = (Double) Program.spacers[i][j];
+						String unit2 = unit.toString() + " ";
+						buff.write(unit2);
+					}
+					buff.newLine();
+				}
 				//Записываем временную метку конца файла
 				buff.write("end");
 			}catch (IOException e1) {e1.printStackTrace();
