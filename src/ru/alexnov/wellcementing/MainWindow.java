@@ -930,6 +930,7 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 				buff.write("mud_visc");
 				buff.newLine();
 				buff.write(mudV.getText());
+				buff.newLine();
 				//Записываем метку для ДНС бурового раствора
 				buff.write("mud_yeld");
 				buff.newLine();
@@ -937,6 +938,7 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 				buff.newLine();
 				//Записываем метку для буферных жидкостей
 				buff.write("spacers");
+				buff.newLine();
 				for (int i=0; i<5; i++){
 					for (int j=0; j<4; j++){
 						Double unit = (Double) Program.spacers[i][j];
@@ -945,6 +947,36 @@ JOptionPane.showMessageDialog(pan22, "Первую строку нельзя у�
 					}
 					buff.newLine();
 				}
+				//Записываем метку для цементных растворов
+				buff.write("cements");
+				buff.newLine();
+				for (int i=0; i<5; i++){
+					for (int j=0; j<6; j++){
+						Double unit = (Double) Program.cements[i][j];
+						String unit2 = unit.toString() + " ";
+						buff.write(unit2);
+					}
+					buff.newLine();
+				}
+				//Записываем метку для продавочных жидкостей
+				buff.write("muds");
+				buff.newLine();
+				for (int i=0; i<5; i++){
+					for (int j=0; j<4; j++){
+						Double unit = (Double) Program.muds[i][j];
+						String unit2 = unit.toString() + " ";
+						buff.write(unit2);
+					}
+					buff.newLine();
+				}
+				//Записывыаем метку для состояния флажка
+				if (mudnomud.isSelected()){
+					buff.write("yes");
+				}
+				else{
+					buff.write("no");
+				}
+				buff.newLine();
 				//Записываем временную метку конца файла
 				buff.write("end");
 			}catch (IOException e1) {e1.printStackTrace();
